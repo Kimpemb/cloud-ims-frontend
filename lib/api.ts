@@ -40,19 +40,35 @@ async function parseErrorBody(res: Response): Promise<ApiError> {
   return new ApiError(res.status, `Request failed (${res.status})`);
 }
 
+const REQUEST_TIMEOUT_MS = 15000;
+
 export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
   const isFormData = init.body instanceof FormData;
 
-  const res = await fetch(path, {
-    ...init,
-    credentials: 'include',
-    headers: isFormData
-      ? init.headers
-      : {
-          'Content-Type': 'application/json',
-          ...(init.headers || {}),
-        },
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  let res: Response;
+  try {
+    res = await fetch(path, {
+      ...init,
+      credentials: 'include',
+      signal: controller.signal,
+      headers: isFormData
+        ? init.headers
+        : {
+            'Content-Type': 'application/json',
+            ...(init.headers || {}),
+          },
+    });
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new ApiError(0, 'The server took too long to respond. It may still have saved — check your inventory before trying again.');
+    }
+    throw new ApiError(0, 'Could not reach the server. Check your connection and try again.');
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!res.ok) {
     throw await parseErrorBody(res);

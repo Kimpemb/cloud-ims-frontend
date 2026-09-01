@@ -36,7 +36,7 @@ export default function EditProductPage() {
 
   async function handleSubmit(request: ProductRequest) {
     const updated = await api.put<ProductResponse>(`/api/products/${id}`, request);
-    setProduct(updated);
+    router.push('/dashboard/products');
   }
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
