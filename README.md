@@ -49,3 +49,6 @@ Visual identity is a "resale ledger" — hairline-rule rows instead of shadowed 
 - **Filters** (brand/size/condition) on the storefront are applied client-side, because `GET /api/store/{username}/products` only accepts a `search` query param server-side (see `StorefrontController.java`) — there's no `brand=`/`size=` filter on the backend yet. Fine for a single seller's catalog size; would need a backend change to scale.
 - Image `<img>` tags are used instead of `next/image`, deliberately — S3 URLs are dynamic per upload and not worth pre-configuring `remotePatterns` for an MVP.
 - Prices are displayed in GH₵ (matches MVP.md's worked examples). The backend has no currency field — this is a display-only choice in `lib/format.ts`, change it in one place if that's wrong.
+
+## Related repos
+- Backend: https://github.com/Kimpemb/cloud-ims
