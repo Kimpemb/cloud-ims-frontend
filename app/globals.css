@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: theme('fontFamily.display');
+  }
+
+  html {
+    background-color: #F1F0EA;
+  }
+
+  body {
+    color: #1E1C18;
+    background-color: #F1F0EA;
+  }
+
+  ::selection {
+    background-color: #1E1C18;
+    color: #F1F0EA;
+  }
+
+  :focus-visible {
+    outline: 2px solid #1E1C18;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* A single hairline row used across product/order lists — the ledger motif */
+  .ledger-row {
+    @apply flex items-center justify-between gap-4 border-b border-line py-4;
+  }
+
+  .ledger-row:first-child {
+    @apply border-t border-line;
+  }
+
+  .field-label {
+    @apply block text-[13px] text-muted mb-1.5 font-sans;
+  }
+
+  .field-input {
+    @apply w-full rounded-tag border border-line bg-panel px-3 py-2.5 font-sans text-[15px] text-ink
+      placeholder:text-muted/70 focus:border-ink focus:outline-none transition-colors;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-tag bg-ink px-5 py-2.5
+      font-sans text-[14px] font-medium text-paper transition-opacity hover:opacity-85
+      disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-tag border border-ink px-5 py-2.5
+      font-sans text-[14px] font-medium text-ink transition-colors hover:bg-ink hover:text-paper
+      disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 font-sans text-[13px] text-muted
+      underline decoration-line underline-offset-4 hover:text-ink hover:decoration-ink transition-colors;
+  }
+
+  .stamp {
+    @apply inline-flex items-center rounded-tag border px-2 py-0.5 font-mono text-[12px] tracking-tight;
+  }
+
+  .stamp-available {
+    @apply stamp border-available text-available;
+  }
+
+  .stamp-reserved {
+    @apply stamp border-reserved text-reserved;
+  }
+
+  .stamp-sold {
+    @apply stamp border-sold text-sold;
+  }
+
+  .stamp-pending {
+    @apply stamp border-reserved text-reserved;
+  }
+
+  .stamp-confirmed {
+    @apply stamp border-available text-available;
+  }
+
+  .stamp-cancelled {
+    @apply stamp border-muted text-muted;
+  }
+
+  .stamp-completed {
+    @apply stamp border-ink text-ink;
+  }
+}
