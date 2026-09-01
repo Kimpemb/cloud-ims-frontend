@@ -116,10 +116,12 @@ export default function StorefrontPage() {
                     />
                   ) : null}
                 </div>
-                <p className="mt-3 font-sans text-[14px] font-medium leading-snug">{product.name}</p>
-                <p className="font-sans text-[13px] text-muted">
-                  {[product.size, product.condition].filter(Boolean).join(' · ')}
-                </p>
+                <p className="mt-3 font-sans text-[14px] font-medium leading-snug">
+  {[product.brand, product.name].filter(Boolean).join(' · ')}
+</p>
+<p className="font-sans text-[13px] text-muted">
+  {[product.size, product.condition].filter(Boolean).join(' · ')}
+</p>
                 <div className="mt-1 flex items-center gap-2">
                   <span className="font-mono text-[14px]">{formatPrice(product.price)}</span>
                   <ProductStatusStamp status={product.status} />
